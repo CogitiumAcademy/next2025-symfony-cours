@@ -6,7 +6,7 @@
 {% block headerSubheading %}A Blog Theme by Start Bootstrap{% endblock %}
 
 {% block content %}
-{{ dump(posts) }}
+{# dump(posts) #}
         <!-- Main Content-->
         <div class="container px-4 px-lg-5">
             <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -15,8 +15,9 @@
                     {% for post in posts %}
                         <!-- Post preview-->
                         <div class="post-preview">
-                            <a href="post.html">
+                            <a href="{{ path('post_view', {slug: post.slug}) }}">
                                 <h2 class="post-title">{{ post.title }}</h2>
+                                <img src="{{ post.image }}" alt="" width="250">
                                 <h3 class="post-subtitle">{{ post.content | u.truncate(150, '...') | raw }}</h3>
                             </a>
                             <p class="post-meta">
@@ -31,6 +32,20 @@
 
                     <!-- Pager-->
                     <div class="d-flex justify-content-end mb-4"><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div>
+                </div>
+                <!-- Sidebar -->
+                <div class="col-lg-4 col-md-4 mx-auto">
+                    <h2>Les anciens articles</h2>
+                    
+                    {% for oldPost in oldPosts %}
+                        <div class="post-preview">
+                            <a href="{{ path('post_view', {slug: oldPost.slug}) }}">
+                                <h2 class="post-subtitle">{{ oldPost.title }}</h2>
+                            </a>
+                            <p class="post-meta">{{ oldPost.createdAt | ago }}</p>
+                        </div>
+                    {% endfor %}
+
                 </div>
             </div>
         </div>

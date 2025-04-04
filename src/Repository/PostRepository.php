@@ -40,4 +40,49 @@ class PostRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findOldPosts(int $nb = 5): array
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT p.slug, p.title, p.createdAt
+            FROM App\Entity\Post p
+            WHERE p.active = :status
+            ORDER BY p.createdAt ASC'
+        )
+        ->setParameter('status', true)
+        ->setMaxResults($nb)
+        ;
+        return $query->getResult();
+    }
+
+    public function findLastPosts(int $nb = 5)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.active = :active')
+            ->setParameter('active', true)
+            ->orderBy('p.createdAt', 'DESC')
+            ->setMaxResults($nb)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function nbAllSubjects(): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT
+            (SELECT COUNT(*) FROM user) as nbusers,
+            (SELECT COUNT(*) FROM post) as nbposts,
+            (SELECT COUNT(*) FROM category) as nbcategories
+            ';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+
+        // returns an array of arrays (Attention : tableau à 2 dimensions)
+        return $resultSet->fetchAllAssociative();
+    }
 }
