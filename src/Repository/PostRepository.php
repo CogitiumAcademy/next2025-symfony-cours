@@ -76,13 +76,14 @@ class PostRepository extends ServiceEntityRepository
         $sql = '
             SELECT
             (SELECT COUNT(*) FROM user) as nbusers,
-            (SELECT COUNT(*) FROM post) as nbposts,
+            (SELECT COUNT(*) FROM post WHERE active=1) as nbpostsactifs,
+            (SELECT COUNT(*) FROM post WHERE active=0) as nbpostsinactifs,
             (SELECT COUNT(*) FROM category) as nbcategories
             ';
         $stmt = $conn->prepare($sql);
         $resultSet = $stmt->executeQuery();
 
         // returns an array of arrays (Attention : tableau à 2 dimensions)
-        return $resultSet->fetchAllAssociative();
+        return $resultSet->fetchAssociative();
     }
 }

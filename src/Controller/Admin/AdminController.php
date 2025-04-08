@@ -18,11 +18,12 @@ final class AdminController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(UserRepository $userRepository, PostRepository $postRepository): Response
     {
-        $nbUsers = $userRepository->nbUsers();
+        //$nbUsers = $userRepository->nbUsers();
         $counts = $postRepository->nbAllSubjects();
+        //dd($nbUsers);
         //dd($counts);
         return $this->render('admin/index.html.twig', [
-            'counts' => $counts[0],
+            'counts' => $counts,
         ]);
     }    
 

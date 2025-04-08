@@ -1,0 +1,61 @@
+{% extends 'sbadmin.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block content %}
+
+<main>
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Gestion des articles</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Articles / Liste</li>
+        </ol>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                DataTable Example
+            </div>
+            <div class="card-body">
+                <table id="datatablesSimple">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>CreatedAt</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Id</th>
+                            <th>Title</th>
+                            <th>CreatedAt</th>
+                            <th>Active</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+
+                        {% for post in posts %}
+                        <tr>
+                            <td>{{ post.id }}</td>
+                            <td>{{ post.title }}</td>
+                            <td>{{ post.createdAt | date }}</td>
+                            <td>{{ post.active }}</td>
+                            <td>
+                                <a href="{{ path('admin_post_activate', {id: post.id}) }}" class="btn btn-primary btn-sm">Toggle</a>
+                                <a href="{{ path('admin_post_delete', {id: post.id, _csrf_token: csrf_token('delete')}) }}" class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous supprimer ?')">Supprimer</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

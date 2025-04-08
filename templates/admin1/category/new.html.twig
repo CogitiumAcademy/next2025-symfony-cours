@@ -1,0 +1,15 @@
+{% extends 'sbadmin.html.twig' %}
+
+{% block title %}New Category{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid px-4">
+    <h1>Create new Category</h1>
+
+    {{ include('admin1/category/_form.html.twig') }}
+
+    <a href="{{ path('app_admin1_category_index') }}">back to list</a>
+    </div>
+</main>
+{% endblock %}

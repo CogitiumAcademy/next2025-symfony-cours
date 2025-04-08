@@ -24,7 +24,7 @@
                     <i class="fas fa-bars"></i>
                 </button>
 
-                {% for flash_error in app.flashes('error') %}
+                {% for flash_error in app.flashes('danger') %}
                     <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
                 {% endfor %}
                 {% for flash_error in app.flashes('success') %}
