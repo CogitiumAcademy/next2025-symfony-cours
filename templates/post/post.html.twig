@@ -2,7 +2,13 @@
 
 {% block title %}Hello PostController!{% endblock %}
 
-{% block headerBackground %}{{ post.image }}{% endblock %}
+
+{# 1ère version : image en url absolue #}
+{# block headerBackground %}{{ post.image }}{% endblock #}
+
+{# 2ème version : image uploadée avec url relative dans public #}
+{% block headerBackground %}{{ asset('images/posts/' ~ post.imageName) }}{% endblock %}
+
 {% block headerTitle %}{{ post.title }}{% endblock %}
 {% block headerSubheading %}{% endblock %}
 

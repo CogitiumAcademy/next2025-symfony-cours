@@ -6,26 +6,33 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Category;
 use Symfony\Component\Form\AbstractType;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 
-class PostType extends AbstractType
+class Post1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('title')
-            //->add('slug')
-            //->add('content')
-            ->add('content', CKEditorType::class, [
-                "label" => "Contenu",
+            ->add('slug')
+            ->add('content')
+            ->add('image')
+            /*
+            ->add('createdAt', null, [
+                'widget' => 'single_text',
             ])
-            ->add('image') // Image en URL absolue
-
+            */
+            ->add('active')
+            /*
+            ->add('imageName')
+            ->add('imageSize')
+            ->add('updatedAt', null, [
+                'widget' => 'single_text',
+            ])
+            */
             // Image uploadée par Vich
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
@@ -37,31 +44,15 @@ class PostType extends AbstractType
                 //'imagine_pattern' => '...',
                 'asset_helper' => true,
             ])   
-                     
-            /*
-            ->add('createdAt', null, [
-                'widget' => 'single_text',
-            ])
-            */
-            //->add('active')
-            /*
+
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'choice_label' => 'id',
             ])
-            */
-            /*
             ->add('category', EntityType::class, [
                 'class' => Category::class,
                 'choice_label' => 'id',
             ])
-            */
-            ->add('category', EntityType::class, [
-                'class' => Category::class,
-                'choice_label' => 'name',
-                'placeholder' => 'Sélectionner',
-            ])
-            ->add('Valider', SubmitType::class)
         ;
     }
 

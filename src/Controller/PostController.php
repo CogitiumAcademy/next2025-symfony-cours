@@ -18,6 +18,8 @@ final class PostController extends AbstractController
     public function index(PostRepository $postRepository): Response
     {
         //$posts = $postRepository->findAll();
+        $count = $postRepository->count();
+        //dd($count);
         $posts = $postRepository->findLastPosts();
         $oldPosts = $postRepository->findOldPosts(3);
         //dd($oldPosts);
@@ -43,6 +45,7 @@ final class PostController extends AbstractController
             $em = $doctrine->getManager();
             $em->persist($post);
             $em->flush();
+            //dd($post);
             return $this->redirectToRoute('home');
         }
 
